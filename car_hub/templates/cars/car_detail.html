@@ -1,0 +1,61 @@
+{% extends 'common/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="d-flex">
+        <div class="d-inline p-2 w-50">
+            <img src="{{ car.image }}" class="w-100 rounded mx-auto d-block">
+        </div>
+        <div class="d-inline p-2 w-50">
+            <div class="d-flex justify-content-between">
+                <h5><b>Brand:</b><br/><i>{{ car.brand }}</i></h5>
+                <h5><b>Year:</b><br/><i>{{ car.year }}</i></h5>
+                <h5><b>Price:</b><br/><i>&euro;{{ car.price }}</i></h5>
+                <h5><b>Owner:</b><br/><i>{{ car.user.email }}</i></h5>
+            </div>
+            <p class="mt-2"><b>Description:</b><br/><i>{{ car.description }}</i></p>
+            {% if is_owner %}
+                <a href="" class="btn btn-success">Edit</a>
+                <a href="" class="btn btn-danger">Delete</a>
+            {% else %}
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'like car' car.id %}">
+                        {% if is_liked %}
+                            <img src="{% static 'liked.png' %}">
+                        {% else %}
+                            <img src="{% static 'not_liked.png' %}">
+                        {% endif %}
+                    </a>
+                {% endif %}
+                <p class="mt-2"><i>Likes</i>: {{ car.likes_count }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card bg-primary text-white" style="padding:1%">
+        {% if comments %}
+            {% for com in comments %}
+                <div class="box">
+                    <h5><u>{{ com.user }}</u>: <em>{{ com.comment }}</em></h5>
+                    <hr>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="box">
+                <h3 class="text-white">There are no comments yet.</h3>
+            </div>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+            <div class="box">
+                <form method="post" action="{% url 'comment car' car.id %}">
+                    {% csrf_token %}
+                    {{ comment }}
+                    <button class="btn btn-secondary" type="submit" style="margin: 1% 0%;">Add comment</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

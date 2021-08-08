@@ -1,0 +1,22 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+
+    <div class="text-center">
+        <h1>Hello, <i>{{ request.user }}</i> !</h1>
+        <div class="d-inline p-2 w-25">
+            <h5>This is your profile picture</h5>
+            <img src=" {{ profile.imageUrl }} " class="w-25 rounded mx-auto d-block">
+        </div>
+
+        <div class="w-50 m-auto">
+            <form action="{% url 'profile' %}" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button class="btn btn-success" style="margin: 1% 0%;">Update Profile</button>
+            </form>
+            <a href="{% url 'delete profile' profile.pk %}" class="btn btn-danger btn-sm">Delete Profile</a>
+        </div>
+    </div>
+
+{% endblock %}

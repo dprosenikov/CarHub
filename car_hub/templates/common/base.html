@@ -27,6 +27,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'car list' %}">All Cars</a>
                 </li>
+                {% if request.user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'all profiles' %}">All Profiles</a>
+                    </li>
+                {% endif %}
                 {% if request.user.is_authenticated %}
                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                         <button type="button" class="btn btn-primary nav-link">{{ request.user }}</button>
@@ -34,9 +39,9 @@
                             <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                                <a class="dropdown-item" href="#">My Cars</a>
+                                <a class="dropdown-item" href="{% url 'my cars' %}">My Cars</a>
                                 <a class="dropdown-item" href="{% url 'create car' %}">Add Car</a>
-                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
                             </div>
                         </div>
                     </div>
@@ -53,8 +58,9 @@
                     </li>
                 {% endif %}
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-sm-2" type="text" placeholder="Search">
+            <form class="d-flex" method="post" action="{% url 'search cars'  %}">
+                {% csrf_token %}
+                <input class="form-control me-sm-2" type="text" placeholder="Search by Brand" name="searched_by">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>

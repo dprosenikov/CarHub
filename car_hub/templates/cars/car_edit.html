@@ -1,0 +1,15 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+
+    <h1 class="text-center">Edit car</h1>
+    <div class="container">
+        <form method="post" class="w-50 m-auto">
+            {{ cars.errors }}
+            {% csrf_token %}
+            {{ form }}
+            <button class="btn btn-primary" type="submit" style="margin: 1% 0%;">Edit</button>
+        </form>
+    </div>
+
+{% endblock %}

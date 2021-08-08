@@ -2,9 +2,9 @@
 
 {% block content %}
 
-    {% if cars %}
+    {% if page_obj %}
 
-        <h1 class='text-center'>All cars</h1>
+        <h1 class='text-center'>My cars</h1>
         <div class="row">
 
             {% for car in page_obj %}
@@ -25,11 +25,11 @@
                         <a href="{% url 'car details' car.id %}" class="btn btn-info">Details</a>
                     </div>
                 </div>
+
             {% endfor %}
 
             <div>
                 <ul class="pagination">
-
 
                     <li class="page-item">
                         <a title="First Page" href="?page=1" class="page-link">&laquo;</a>
@@ -62,9 +62,15 @@
 
     {% else %}
 
-        <h1 class='text-center'>No cars listed yet</h1>
+        <h1 class='text-center'>No added cars yet</h1>
+        <div class="m-auto d-flex justify-content-center">
+            <div class="m-2">
+                <a class="btn btn-primary" href="{% url 'create car' %}">Add Car</a>
+            </div>
+        </div>
 
     {% endif %}
+
 
 
 {% endblock %}

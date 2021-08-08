@@ -1,0 +1,39 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+
+    {% if cars %}
+
+        <h1 class='text-center'>You searched for {{ searched_by }}</h1>
+        <div class="row">
+
+            {% for car in cars %}
+
+                <div class="card mb-3" style="width: 15rem; margin-left: 2em">
+                    <h3 class="card-header">{{ car.brand }}</h3>
+                    <div class="card-body">
+                        <h5 class="card-title">Year: {{ car.year }}</h5>
+                    </div>
+                    <img src="{{ car.image }}" class="card-img-top">
+                    <div class="card-body">
+                        <p class="card-text">{{ car.description }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">&euro; {{ car.price }}</li>
+                    </ul>
+                    <div class="card-footer text-muted">
+                        <a href="{% url 'car details' car.id %}" class="btn btn-info">Details</a>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <h1 class='text-center'>No results for '{{ searched_by }}'</h1>
+
+    {% endif %}
+
+
+{% endblock %}

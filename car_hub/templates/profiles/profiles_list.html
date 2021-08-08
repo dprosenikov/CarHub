@@ -1,0 +1,26 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+
+    <h1 class='text-center'>All Profiles</h1>
+    <div class="row">
+
+        {% for p in profiles %}
+
+            <div class="card mb-3" style="width: 15rem; margin-left: 2em">
+                <div class="card-body">
+                    <h5 class="card-title">{{ p.user }}</h5>
+                </div>
+                <img src="{{ p.imageUrl }}" class="card-img-top">
+                <div><br/>{{ p.pk }}</div>
+                <div class="card-body">
+                   <a href="{% url 'delete profile' p.pk %}" class="btn btn-danger">Delete Profile</a>
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+{% endblock %}

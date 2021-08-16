@@ -1,7 +1,6 @@
 from django import forms
 
 from car_hub.cars.models import CommentModel, CarModel
-from car_hub.cars.validators import validate_year_range
 
 from django.utils.safestring import mark_safe
 
@@ -25,8 +24,6 @@ class CarCreateForm(forms.ModelForm):
 
     def _init_bootstrap_fields(self):
         for (_, field) in self.fields.items():
-            if _ == 'year':
-                field.validators = [validate_year_range]
             if _ == 'price':
                 field.widget.attrs['placeholder'] = mark_safe('&euro;')
             if 'class' not in field.widget.attrs:

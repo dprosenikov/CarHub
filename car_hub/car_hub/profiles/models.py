@@ -4,7 +4,7 @@ from django.db import models
 
 from car_hub.profiles.managers import CarHubUserManager
 
-user_img = 'https://lh3.googleusercontent.com/proxy/srsv7ttgYG8RW-2SOQLH3NfJrIj7EwaYMZmi9V1Zk4Ug5y5Aq3F2_S4azDIbTxE9cqhtlrtFtwsP2KOpLbjOL--Q2JpXzP1pLZ0-1tyH7pARkXhPv4reFJEQQLcHuhRDIeCQSg'
+user_img = 'https://thepowerofthedream.org/wp-content/uploads/2015/09/generic-profile-picture.jpg'
 
 
 class CarHubUser(AbstractBaseUser, PermissionsMixin):

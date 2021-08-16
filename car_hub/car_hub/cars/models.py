@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models import Count
 
 from car_hub.cars.enums import CarBrands
+from car_hub.cars.validators import validate_year_range
 
 UserModel = get_user_model()
 
@@ -11,7 +12,7 @@ class CarModel(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     brand = models.CharField(max_length=50, choices=[(b.name, b.value) for b in CarBrands])
     description = models.TextField(max_length=200)
-    year = models.PositiveIntegerField()
+    year = models.PositiveIntegerField(validators = [validate_year_range])
     image = models.URLField(max_length=200)
     price = models.PositiveIntegerField()
 

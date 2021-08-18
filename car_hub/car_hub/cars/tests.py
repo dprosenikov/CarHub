@@ -250,3 +250,29 @@ class CreateEdtiDeleteCarTest(TestCase):
     def test_delete_car(self):
         self.client.delete(reverse('delete car', kwargs={'pk': self.car.id, }))
         self.assertTrue(CarModel.objects.count() == 0)
+
+
+class SearchTest(TestCase):
+    def setUp(self) -> None:
+        self.client = Client()
+        self.user = UserModel.objects.create_user(email='peter@abv.bg', password='123')
+        self.car = CarModel.objects.create(
+            brand='Audi',
+            description='Car Description',
+            year=2000,
+            image='https://www.focus2move.com/wp-content/uploads/2020/08/Tesla-Roadster-2020-1024-03.jpg',
+            price=24000,
+            user=self.user
+        )
+
+    def test_search_returns_result(self):
+        search = 'Aud'
+        cars = CarModel.objects.filter(brand__contains=search)
+        response = self.client.post(reverse('search cars'), {'searched_by': search, 'cars': self.car})
+        self.assertEqual(len(list(response.context['cars'])), 1)
+
+    def test_search_returns_NO_result(self):
+        search = 'test'
+        cars = CarModel.objects.filter(brand__contains=search)
+        response = self.client.post(reverse('search cars'), {'searched_by': search, 'cars': self.car})
+        self.assertNotEqual(len(list(response.context['cars'])), 1)
